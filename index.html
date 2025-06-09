@@ -685,4 +685,95 @@
       <div class="services-grid" role="list">
         <article class="service-card" tabindex="0" role="listitem" aria-label="Service: Web Development">
           <h3 class="service-title">Web Development</h3>
-          <p class="service-description">Building responsive and accessible websites us
+          <p class="service-description">Building responsive and accessible websites using modern web technologies like HTML5, CSS3, and JavaScript frameworks.</p>
+        </article>
+        <article class="service-card" tabindex="0" role="listitem" aria-label="Service: Software Development">
+          <h3 class="service-title">Software Development</h3>
+          <p class="service-description">Creating efficient, maintainable, and scalable applications tailored to client needs, leveraging languages like Python, JavaScript, and more.</p>
+        </article>
+        <article class="service-card" tabindex="0" role="listitem" aria-label="Service: Data Analysis">
+          <h3 class="service-title">Data Analysis</h3>
+          <p class="service-description">Analyzing datasets to provide actionable insights using tools like Excel, Python libraries, and visualization software.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="portfolio" aria-labelledby="portfolio-heading">
+      <h2 id="portfolio-heading" tabindex="0">Portfolio</h2>
+      <p class="intro-text" tabindex="0">
+        Here are some examples of my work as an IT student and developer, illustrating the range and quality of projects I have completed.
+      </p>
+      <div class="portfolio-grid" role="list">
+        <article class="portfolio-card" tabindex="0" role="listitem" aria-label="Portfolio item: Personal Website">
+          <h3 class="portfolio-title">Personal Website</h3>
+          <p class="portfolio-description">A sleek, modern personal portfolio website with responsive design, dark mode, and smooth user experience.</p>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-link" tabindex="0" aria-label="View Personal Website code">Code</a>
+            <a href="#" class="portfolio-link" tabindex="0" aria-label="View Personal Website live demo">Demo</a>
+          </div>
+        </article>
+        <article class="portfolio-card" tabindex="0" role="listitem" aria-label="Portfolio item: Task Manager App">
+          <h3 class="portfolio-title">Task Manager App</h3>
+          <p class="portfolio-description">A simple and effective application to manage daily tasks with drag-and-drop and offline support.</p>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-link" tabindex="0" aria-label="View Task Manager App code">Code</a>
+            <a href="#" class="portfolio-link" tabindex="0" aria-label="View Task Manager App live demo">Demo</a>
+          </div>
+        </article>
+        <article class="portfolio-card" tabindex="0" role="listitem" aria-label="Portfolio item: Data Visualization Dashboard">
+          <h3 class="portfolio-title">Data Visualization Dashboard</h3>
+          <p class="portfolio-description">Interactive dashboards visualizing complex datasets with clear, intuitive charts and filters.</p>
+          <div class="portfolio-links">
+            <a href="#" class="portfolio-link" tabindex="0" aria-label="View Data Visualization Dashboard code">Code</a>
+            <a href="#" class="portfolio-link" tabindex="0" aria-label="View Data Visualization Dashboard live demo">Demo</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading" tabindex="0">Contact Me</h2>
+      <form aria-label="Contact form" onsubmit="event.preventDefault(); alert('Thank you for reaching out!');" tabindex="0">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required />
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="your.email@example.com" required />
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+        <button type="submit" tabindex="0">Send</button>
+      </form>
+    </section>
+  </main>
+  <script>
+    const themeToggleButton = document.getElementById('theme-toggle');
+    // Initialize theme based on user's system preference or previously selected theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+    }
+
+    themeToggleButton.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').slice(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+          targetElement.focus({ preventScroll: true });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
