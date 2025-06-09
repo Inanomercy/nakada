@@ -1,649 +1,613 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Yukihiro Nakada - Personal Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
+    /* CSS Variables for light and dark themes */
     :root {
       --color-bg: #ffffff;
-      --color-text: #374151;
-      --color-gray: #6b7280;
-      --color-primary: #111827;
-      --color-primary-hover: #1f2937;
-      --color-shadow: rgba(0, 0, 0, 0.07);
+      --color-text-primary: #111827;
+      --color-text-secondary: #6b7280;
+      --color-accent: #111827;
+      --color-button-bg: #111827;
+      --color-button-text: #ffffff;
+      --color-button-hover-bg: #374151;
+      --card-bg: #f9fafb;
+      --card-shadow: rgba(0, 0, 0, 0.05);
+      --max-width: 1200px;
+
       --radius: 0.75rem;
-      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-speed: 0.3s;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+      --icon-size: 20px;
+      --icon-color: #6b7280;
+      --icon-color-dark: #d1d5db;
+    }
+    /* Dark theme overrides */
+    html[data-theme='dark'] {
+      --color-bg: #111827;
+      --color-text-primary: #f9fafb;
+      --color-text-secondary: #d1d5db;
+      --color-accent: #f9fafb;
+      --color-button-bg: #f9fafb;
+      --color-button-text: #111827;
+      --color-button-hover-bg: #e5e7eb;
+      --card-bg: #1f2937;
+      --card-shadow: rgba(0, 0, 0, 0.3);
+      --icon-color: var(--icon-color-dark);
     }
 
-    *, *::before, *::after {
+    /* Reset and base */
+    * {
       box-sizing: border-box;
     }
-
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      font-size: 18px;
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text-secondary);
       line-height: 1.6;
+      font-size: 18px;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
     }
-
     a {
-      color: var(--color-primary);
+      color: var(--color-accent);
       text-decoration: none;
-      transition: color var(--transition);
+      transition: color var(--transition-speed);
     }
-
     a:hover,
     a:focus {
-      color: var(--color-primary-hover);
+      color: var(--color-button-hover-bg);
       outline: none;
     }
+    h1, h2, h3 {
+      color: var(--color-text-primary);
+      margin-top: 0;
+      font-weight: 700;
+      line-height: 1.2;
+      transition: color var(--transition-speed);
+    }
+    h1 {
+      font-size: 3rem;
+      letter-spacing: -0.03em;
+    }
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+    }
+    h3 {
+      font-size: 1.25rem;
+    }
+    p {
+      margin-top: 0;
+      margin-bottom: 1.25rem;
+      color: var(--color-text-secondary);
+      transition: color var(--transition-speed);
+    }
+    /* Layout container */
+    .container {
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
 
+    /* Header */
     header {
       position: sticky;
       top: 0;
-      background-color: var(--color-bg);
-      box-shadow: 0 1px 6px var(--color-shadow);
+      background: var(--color-bg);
+      border-bottom: 1px solid #e5e7eb;
       z-index: 1000;
+      box-shadow: 0 1px 3px var(--card-shadow);
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+      display: flex;
+      align-items: center;
+      height: 4.5rem;
+      padding: 0 1.25rem;
+      justify-content: space-between;
     }
-
     nav {
-      max-width: 1200px;
-      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.25rem 1.5rem;
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
     }
-
     .logo {
-      font-weight: 700;
-      font-size: 1.75rem;
-      color: var(--color-primary);
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--color-accent);
+      letter-spacing: -0.025em;
       user-select: none;
-      letter-spacing: 0.02em;
+      transition: color var(--transition-speed);
     }
-
     .nav-links {
       display: flex;
-      gap: 1.75rem;
-    }
-
-    .nav-links a {
+      gap: 1.5rem;
       font-weight: 600;
-      font-size: 1.1rem;
-      padding: 0.3rem 0;
-      position: relative;
-      transition: color var(--transition);
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+    }
+    .nav-links a {
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+    .nav-links a:hover,
+    .nav-links a:focus {
+      background-color: #f3f4f6;
+      color: var(--color-accent);
+      outline: none;
+    }
+    html[data-theme='dark'] .nav-links a:hover,
+    html[data-theme='dark'] .nav-links a:focus {
+      background-color: #374151;
+      color: var(--color-button-text);
+    }
+
+    /* Dark mode toggle button */
+    .theme-toggle-button {
+      background: none;
+      border: 2px solid var(--color-accent);
+      border-radius: var(--radius);
+      color: var(--color-accent);
       cursor: pointer;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.3rem 0.75rem;
+      transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-
-    .nav-links a::after {
-      content: "";
-      display: block;
-      width: 0%;
-      height: 2px;
-      background: var(--color-primary);
-      transition: width var(--transition);
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      border-radius: 1px;
-    }
-
-    .nav-links a:hover::after,
-    .nav-links a:focus::after {
-      width: 100%;
-    }
-
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 5rem 2rem 6rem;
-      display: flex;
-      flex-direction: column;
-      gap: 6rem;
+    .theme-toggle-button:hover,
+    .theme-toggle-button:focus {
+      background-color: var(--color-accent);
+      color: var(--color-button-text);
+      outline: none;
+      border-color: var(--color-button-text);
     }
 
     /* Hero Section */
     .hero {
+      padding-top: 6rem;
+      padding-bottom: 5rem;
       text-align: center;
-      padding-top: 1rem;
-      padding-bottom: 2rem;
-    }
-
-    .hero h1 {
-      font-weight: 800;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      margin: 0;
-      color: var(--color-primary);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      user-select: none;
-    }
-
-    .hero p {
-      color: var(--color-gray);
-      font-size: 1.35rem;
-      margin-top: 1.25rem;
-      max-width: 650px;
+      color: var(--color-text-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      max-width: 640px;
       margin-left: auto;
       margin-right: auto;
-      font-weight: 500;
-      user-select: text;
+      transition: color var(--transition-speed);
     }
-
-    .hero .cta-button {
-      margin-top: 3rem;
-      background-color: var(--color-primary);
-      color: white;
+    .hero img.profile-photo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 15px rgba(17, 24, 39, 0.15);
+      user-select: none;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 0;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 2.5rem;
+      max-width: 520px;
+      transition: color var(--transition-speed);
+    }
+    .btn-primary {
+      background-color: var(--color-button-bg);
+      color: var(--color-button-text);
       font-weight: 700;
-      font-size: 1.3rem;
-      padding: 1.15rem 3rem;
+      padding: 0.75rem 2rem;
       border: none;
       border-radius: var(--radius);
+      font-size: 1.125rem;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(17, 24, 39, 0.25);
-      transition: background-color var(--transition), transform 0.25s ease;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
       user-select: none;
-      will-change: transform;
+      text-decoration: none;
+      display: inline-block;
     }
-
-    .hero .cta-button:hover,
-    .hero .cta-button:focus {
-      background-color: var(--color-primary-hover);
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: var(--color-button-hover-bg);
       outline: none;
       transform: scale(1.05);
     }
 
-    /* Sections */
+    /* Section styles */
     section {
-      display: flex;
-      flex-direction: column;
-      gap: 3rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+      transition: color var(--transition-speed);
     }
-
     section h2 {
-      font-size: clamp(2.25rem, 4vw, 3rem);
-      font-weight: 700;
-      color: var(--color-primary);
-      margin: 0 0 1.25rem 0;
-      border-left: 6px solid var(--color-primary);
-      padding-left: 1rem;
-      user-select: none;
-      letter-spacing: 0.02em;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: var(--color-text-primary);
+      transition: color var(--transition-speed);
     }
 
-    /* About */
-    .about p {
-      max-width: 770px;
-      font-size: 1.15rem;
-      color: var(--color-gray);
-      font-weight: 500;
-      line-height: 1.7;
-      user-select: text;
-    }
-
-    /* Skills & Portfolio Container */
-    .skills-portfolio-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 4rem;
-      max-width: 1200px;
+    /* About Section */
+    .about-text {
+      max-width: 720px;
       margin: 0 auto;
-      padding: 0 1rem;
+      text-align: center;
+      font-size: 1.125rem;
+      color: var(--color-text-secondary);
+      transition: color var(--transition-speed);
     }
 
-    /* Skills */
-    .skills {
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px var(--card-shadow);
+      padding: 1.5rem;
+      transition:
+        box-shadow var(--transition-speed),
+        transform var(--transition-speed),
+        background-color var(--transition-speed),
+        color var(--transition-speed);
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      justify-content: space-between;
+      color: var(--color-text-secondary);
     }
-
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 2rem;
-      max-width: 900px;
+    .project-card:hover,
+    .project-card:focus-within {
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+      transform: translateY(-4px);
+      outline: none;
+      color: var(--color-text-primary);
     }
-
-    .skill-card {
-      background-color: #f9fafb;
-      border-radius: var(--radius);
-      box-shadow: 0 2px 10px var(--color-shadow);
-      padding: 1.75rem 2rem;
-      text-align: center;
+    .project-title {
       font-weight: 700;
-      color: var(--color-primary);
-      font-size: 1.05rem;
-      transition: box-shadow var(--transition), transform 0.3s ease;
-      cursor: default;
-      user-select: none;
-      will-change: transform;
+      font-size: 1.25rem;
+      color: var(--color-text-primary);
+      margin-bottom: 0.75rem;
+      transition: color var(--transition-speed);
     }
-
-    .skill-card:hover,
-    .skill-card:focus {
-      box-shadow: 0 10px 28px var(--color-shadow);
-      transform: translateY(-5px);
+    .project-desc {
+      flex-grow: 1;
+      color: var(--color-text-secondary);
+      margin-bottom: 1rem;
+      transition: color var(--transition-speed);
+    }
+    .project-link {
+      font-weight: 600;
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: color var(--transition-speed);
+    }
+    .project-link:hover,
+    .project-link:focus {
+      text-decoration: underline;
       outline: none;
     }
 
-    /* Portfolio */
-    .portfolio {
+    /* Skills Section */
+    .skills-list {
+      max-width: 720px;
+      margin: 0 auto;
       display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem 2rem;
+      justify-content: center;
+      list-style: none;
+      padding: 0;
+    }
+    .skills-list li {
+      background: #f3f4f6;
+      color: var(--color-text-primary);
+      border-radius: var(--radius);
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      font-size: 1rem;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color var(--transition-speed), color var(--transition-speed);
+    }
+    html[data-theme='dark'] .skills-list li {
+      background: #374151;
+      color: var(--color-text-secondary);
+    }
+    .skills-list li svg {
+      width: var(--icon-size);
+      height: var(--icon-size);
+      stroke: var(--icon-color);
+      transition: stroke var(--transition-speed);
+      flex-shrink: 0;
+    }
+    html[data-theme='dark'] .skills-list li svg {
+      stroke: var(--icon-color-dark);
     }
 
+    /* Photographer icon */
+    .icon-camera svg {
+      stroke-width: 1.75;
+    }
+
+    /* Portfolio Section */
     .portfolio-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.75rem;
+      padding-top: 1rem;
     }
-
-    .portfolio-card {
+    .portfolio-item {
       position: relative;
       border-radius: var(--radius);
-      box-shadow: 0 2px 10px var(--color-shadow);
       overflow: hidden;
+      background: var(--card-bg);
+      box-shadow: 0 2px 8px var(--card-shadow);
       cursor: pointer;
-      transition: box-shadow var(--transition), transform 0.3s ease;
-      user-select: none;
-      background-color: #fff;
+      transition: box-shadow var(--transition-speed), transform var(--transition-speed);
     }
-
-    .portfolio-card img {
+    .portfolio-item:hover,
+    .portfolio-item:focus-within {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      transform: translateY(-4px);
+      outline: none;
+    }
+    .portfolio-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.3s ease;
+      filter: grayscale(0.05);
+      transition: filter var(--transition-speed);
       border-radius: var(--radius);
     }
-
-    .portfolio-card:hover,
-    .portfolio-card:focus {
-      box-shadow: 0 12px 35px var(--color-shadow);
-      transform: translateY(-6px);
-      outline: none;
+    .portfolio-item:hover img,
+    .portfolio-item:focus-within img {
+      filter: grayscale(0);
     }
 
-    .portfolio-card:hover img,
-    .portfolio-card:focus img {
-      transform: scale(1.05);
-    }
-
-    .portfolio-card .overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(17, 24, 39, 0.7);
-      color: white;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      font-size: 0.9rem;
-      border-bottom-left-radius: var(--radius);
-      border-bottom-right-radius: var(--radius);
-      user-select: none;
-    }
-
-    /* Projects */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2.5rem;
-    }
-
-    .project-card {
-      background-color: #f9fafb;
-      border-radius: var(--radius);
-      box-shadow: 0 4px 16px var(--color-shadow);
+    /* Contact Section */
+    .contact-form {
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--card-bg);
       padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: box-shadow var(--transition), transform 0.3s ease;
-      cursor: pointer;
-      user-select: none;
-      will-change: transform;
-    }
-
-    .project-card:hover,
-    .project-card:focus {
-      box-shadow: 0 15px 35px var(--color-shadow);
-      transform: translateY(-7px);
-      outline: none;
-    }
-
-    .project-card h3 {
-      margin: 0 0 0.75rem 0;
-      font-weight: 800;
-      color: var(--color-primary);
-      font-size: 1.4rem;
-      user-select: none;
-    }
-
-    .project-card p {
-      color: var(--color-gray);
-      font-weight: 500;
-      font-size: 1.05rem;
-      flex-grow: 1;
-      user-select: text;
-      line-height: 1.6;
-    }
-
-    .project-links {
-      margin-top: 1.5rem;
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .project-link {
-      color: var(--color-primary);
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 0.4rem 0.9rem;
-      border-radius: 0.5rem;
-      border: 2px solid transparent;
-      transition: background-color var(--transition), border-color var(--transition), color var(--transition);
-      user-select: none;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .project-link:hover,
-    .project-link:focus {
-      background-color: var(--color-primary);
-      color: white;
-      border-color: var(--color-primary);
-      outline: none;
-    }
-
-    /* Contact */
-    .contact-info {
-      font-size: 1.2rem;
-      color: var(--color-gray);
-      max-width: 520px;
-      font-weight: 500;
-      line-height: 1.8;
-      user-select: text;
-      white-space: pre-line;
-      margin-bottom: 2rem;
-    }
-
-    .contact-info a {
-      color: var(--color-primary);
-      font-weight: 600;
-      word-break: break-word;
-      transition: color var(--transition);
-      cursor: pointer;
-    }
-
-    .contact-info a:hover,
-    .contact-info a:focus {
-      color: var(--color-primary-hover);
-      outline: none;
-    }
-
-    /* Contact form */
-    form.contact-form {
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      gap: 1.8rem;
-    }
-
-    form.contact-form label {
-      font-weight: 600;
-      color: var(--color-primary);
-      font-size: 1rem;
-      user-select: none;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-
-    form.contact-form input[type="email"],
-    form.contact-form textarea {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1rem;
-      color: var(--color-text);
-      background-color: #f9fafb;
-      border: 1.8px solid #d1d5db;
       border-radius: var(--radius);
-      padding: 0.75rem 1rem;
+      box-shadow: 0 2px 8px var(--card-shadow);
+      transition:
+        background-color var(--transition-speed),
+        color var(--transition-speed);
+      color: var(--color-text-secondary);
+    }
+    .form-group {
+      position: relative;
+      margin-bottom: 1.75rem;
+    }
+    /* Floating Labels */
+    input, textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: var(--radius);
+      padding: 1rem 1rem 1rem 1rem;
+      font-size: 1rem;
+      color: var(--color-text-primary);
+      background: transparent;
+      transition: border-color var(--transition-speed), box-shadow var(--transition-speed), color var(--transition-speed);
       resize: vertical;
-      min-height: 120px;
-      transition: border-color var(--transition), box-shadow var(--transition);
-      outline-offset: 2px;
-      outline-color: transparent;
+      font-family: var(--font-sans);
     }
-
-    form.contact-form input[type="email"]:focus,
-    form.contact-form textarea:focus {
-      border-color: var(--color-primary);
-      box-shadow: 0 0 8px rgba(17, 24, 39, 0.3);
-      outline-color: var(--color-primary);
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--color-button-bg);
+      box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.2);
     }
-
-    form.contact-form button[type="submit"] {
-      background-color: var(--color-primary);
-      color: white;
+    label {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      color: var(--color-text-secondary);
+      font-size: 1rem;
+      pointer-events: none;
+      transition: all 0.25s ease, color var(--transition-speed);
+      background: var(--color-bg);
+      padding: 0 0.25rem;
+      border-radius: 0.25rem;
+    }
+    input:focus + label,
+    input:not(:placeholder-shown) + label,
+    textarea:focus + label,
+    textarea:not(:placeholder-shown) + label {
+      font-size: 0.75rem;
+      top: -0.5rem;
+      left: 0.75rem;
+      color: var(--color-button-bg);
       font-weight: 700;
-      font-size: 1.1rem;
-      padding: 1rem 2.5rem;
+    }
+    button[type="submit"] {
+      width: 100%;
+      background-color: var(--color-button-bg);
+      color: var(--color-button-text);
+      font-weight: 700;
+      padding: 1rem 0;
       border: none;
       border-radius: var(--radius);
+      font-size: 1.125rem;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(17, 24, 39, 0.25);
-      transition: background-color var(--transition), transform 0.25s ease;
+      transition: background-color var(--transition-speed), transform var(--transition-speed);
       user-select: none;
-      align-self: flex-start;
     }
-
-    form.contact-form button[type="submit"]:hover,
-    form.contact-form button[type="submit"]:focus {
-      background-color: var(--color-primary-hover);
+    button[type="submit"]:hover,
+    button[type="submit"]:focus {
+      background-color: var(--color-button-hover-bg);
       outline: none;
       transform: scale(1.05);
     }
 
-    /* Responsive */
-    @media (max-width: 600px) {
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2.5rem 1.25rem;
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      user-select: none;
+      transition: color var(--transition-speed);
+    }
+    /* Responsive tweaks */
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 2.5rem;
+      }
       nav {
-        padding: 1rem 1rem;
+        height: 3.75rem;
       }
       .nav-links {
         gap: 1rem;
+        font-size: 0.9rem;
       }
-      .hero h1 {
-        font-size: 2.8rem;
+    }
+
+    /* System preference for dark mode */
+    @media (prefers-color-scheme: dark) {
+      html:not([data-theme]) {
+        --color-bg: #111827;
+        --color-text-primary: #f9fafb;
+        --color-text-secondary: #d1d5db;
+        --color-accent: #f9fafb;
+        --color-button-bg: #f9fafb;
+        --color-button-text: #111827;
+        --color-button-hover-bg: #e5e7eb;
+        --card-bg: #1f2937;
+        --card-shadow: rgba(0, 0, 0, 0.3);
+        --icon-color: var(--icon-color-dark);
       }
-      .hero p {
-        font-size: 1.15rem;
-        max-width: 90vw;
-      }
-      main {
-        padding: 3rem 1rem 4rem;
-        gap: 4rem;
-      }
-      .skills-portfolio-container {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-        max-width: 100%;
-        padding: 0 1rem;
-      }
-      .skills-grid {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 1.5rem;
-      }
-      .project-card {
-        padding: 1.5rem;
-      }
-      .project-card h3 {
-        font-size: 1.25rem;
-      }
-      .project-card p {
-        font-size: 1rem;
-      }
-      .project-links {
-        gap: 1rem;
-      }
-      .contact-info {
-        font-size: 1.1rem;
-        max-width: 100%;
-      }
-      form.contact-form {
-        gap: 1.2rem;
-      }
-      form.contact-form button[type="submit"] {
-        width: 100%;
-        padding: 1rem;
-        font-size: 1.15rem;
+      body {
+        background: var(--color-bg);
+        color: var(--color-text-secondary);
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <nav role="navigation" aria-label="Main Navigation">
-      <div class="logo" tabindex="0">Yukihiro Nakada</div>
-      <div class="nav-links">
-        <a href="#about" tabindex="0">About</a>
-        <a href="#skills" tabindex="0">Skills</a>
-        <a href="#projects" tabindex="0">Projects</a>
-        <a href="#contact" tabindex="0">Contact</a>
+  <header role="banner">
+    <nav class="container" aria-label="Primary">
+      <a href="#hero" class="logo">Yukihiro Nakada</a>
+      <div class="nav-links" role="navigation" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact">Contact</a>
       </div>
+      <button class="theme-toggle-button" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        🌙 Dark Mode
+      </button>
     </nav>
   </header>
-  
-  </main>
-  </d>
-  <div class="home-image">
-    <img src-l="yuki.jpg" alt="img">
-    <section class="hero" aria-label="Introduction">
+
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="hero" role="region" aria-label="Introduction">
+      <img src="yuki.jpg" alt="Photo of Yukihiro Nakada" class="profile-photo" />
       <h1>Hi, I'm Yukihiro Nakada</h1>
-      <p>A passionate developer crafting elegant solutions with clean code and modern design.</p>
-      <button class="cta-button" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'});" aria-label="Contact Yukihiro">Get in Touch</button>
+      <p>A passionate developer building clean and elegant web experiences.</p>
+      <a href="#contact" class="btn-primary" role="button">Get In Touch</a>
     </section>
 
-    <!-- About -->
-    <section id="about" aria-labelledby="about-title" class="about">
-      <h2 id="about-title">About Me</h2>
-      <p>
-        I am a software developer with a focus on creating meaningful and efficient applications.
-        With a passion for problem-solving and design, I enjoy working across the full stack to deliver great user experiences.
+    <!-- About Section -->
+    <section id="about" class="container" role="region" aria-label="About me">
+      <h2>About Me</h2>
+      <p class="about-text">
+        I'm Yukihiro Nakada, a dedicated software engineer focused on creating performant and accessible web applications. I enjoy using modern web technologies to craft user-friendly experiences with elegant design and clean code.
       </p>
     </section>
 
-    <!-- Skills and Portfolio side by side -->
-    <div class="skills-portfolio-container">
-      <!-- Skills -->
-      <section id="skills" aria-labelledby="skills-title" class="skills">
-        <h2 id="skills-title">Skills</h2>
-        <div class="skills-grid" role="list">
-          <div class="skill-card" role="listitem" tabindex="0">JavaScript (ES6+)</div>
-          <div class="skill-card" role="listitem" tabindex="0">React.js & Vue.js</div>
-          <div class="skill-card" role="listitem" tabindex="0">Node.js & Express</div>
-          <div class="skill-card" role="listitem" tabindex="0">Python & Flask</div>
-          <div class="skill-card" role="listitem" tabindex="0">HTML5 & CSS3</div>
-          <div class="skill-card" role="listitem" tabindex="0">SQL & NoSQL Databases</div>
-        </div>
-      </section>
-
-      <!-- Portfolio -->
-      <section id="portfolio" aria-labelledby="portfolio-title" class="portfolio">
-        <h2 id="portfolio-title">Portfolio</h2>
-        <div class="portfolio-grid">
-          <div class="portfolio-card" tabindex="0" aria-label="Portfolio Project Image 1">
-            <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=400&q=80" alt="Project 1 screenshot" />
-            <div class="overlay">Project 1</div>
-          </div>
-          <div class="portfolio-card" tabindex="0" aria-label="Portfolio Project Image 2">
-            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80" alt="Project 2 screenshot" />
-            <div class="overlay">Project 2</div>
-          </div>
-          <div class="portfolio-card" tabindex="0" aria-label="Portfolio Project Image 3">
-            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80" alt="Project 3 screenshot" />
-            <div class="overlay">Project 3</div>
-          </div>
-          <div class="portfolio-card" tabindex="0" aria-label="Portfolio Project Image 4">
-            <img src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?auto=format&fit=crop&w=400&q=80" alt="Project 4 screenshot" />
-            <div class="overlay">Project 4</div>
-          </div>
-          <div class="portfolio-card" tabindex="0" aria-label="Portfolio Project Image 5">
-            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=400&q=80" alt="Project 5 screenshot" />
-            <div class="overlay">Project 5</div>
-          </div>
-          <div class="portfolio-card" tabindex="0" aria-label="Portfolio Project Image 6">
-            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=80" alt="Project 6 screenshot" />
-            <div class="overlay">Project 6</div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- Projects -->
-    <section id="projects" aria-labelledby="projects-title" class="projects">
-      <h2 id="projects-title">Projects</h2>
+    <!-- Projects Section -->
+    <section id="projects" class="container" role="region" aria-label="Projects">
+      <h2>Projects</h2>
       <div class="projects-grid">
-        <article class="project-card" tabindex="0" aria-label="Project: Portfolio Website">
-          <h3>Personal Portfolio</h3>
-          <p>A modern, responsive portfolio website showcasing my skills and projects.</p>
-          <div class="project-links">
-            <a class="project-link" href="#" target="_blank" rel="noopener noreferrer" tabindex="0">View Site</a>
-            <a class="project-link" href="#" target="_blank" rel="noopener noreferrer" tabindex="0">Source Code</a>
-          </div>
+        <article class="project-card" tabindex="0" aria-label="Project One">
+          <h3 class="project-title">Personal Blog</h3>
+          <p class="project-desc">
+            A minimalistic blog platform featuring markdown support, responsive design, and easy content management.
+          </p>
+          <a class="project-link" href="#" target="_blank" rel="noopener noreferrer">View Project →</a>
         </article>
-        <article class="project-card" tabindex="0" aria-label="Project: Todo App">
-          <h3>Todo Application</h3>
-          <p>An intuitive todo app with task management, deadlines, and reminders.</p>
-          <div class="project-links">
-            <a class="project-link" href="#" target="_blank" rel="noopener noreferrer" tabindex="0">View App</a>
-            <a class="project-link" href="#" target="_blank" rel="noopener noreferrer" tabindex="0">GitHub</a>
-          </div>
+        <article class="project-card" tabindex="0" aria-label="Project Two">
+          <h3 class="project-title">Portfolio Website</h3>
+          <p class="project-desc">
+            Custom-built responsive portfolio to showcase skills, projects, and get in touch.
+          </p>
+          <a class="project-link" href="#" target="_blank" rel="noopener noreferrer">View Project →</a>
         </article>
-        <article class="project-card" tabindex="0" aria-label="Project: Blog Platform">
-          <h3>Blog Platform</h3>
-          <p>A minimalistic blog platform with markdown support and SEO optimization.</p>
-          <div class="project-links">
-            <a class="project-link" href="#" target="_blank" rel="noopener noreferrer" tabindex="0">Explore</a>
-            <a class="project-link" href="#" target="_blank" rel="noopener noreferrer" tabindex="0">Repo</a>
-          </div>
+        <article class="project-card" tabindex="0" aria-label="Project Three">
+          <h3 class="project-title">Task Manager App</h3>
+          <p class="project-desc">
+            A sleek task management tool with drag-and-drop and local storage persistence.
+          </p>
+          <a class="project-link" href="#" target="_blank" rel="noopener noreferrer">View Project →</a>
         </article>
       </div>
     </section>
 
-    <!-- Contact -->
-    <section id="contact" aria-labelledby="contact-title" class="contact">
-      <h2 id="contact-title">Contact</h2>
-      <p class="contact-info">
-        Feel free to reach out via email, phone, or connect on professional networks.<br />
-        Email: <a href="mailto:yukihironakada746@gmail.com">yukihironakada746@gmail.com</a><br />
-        Phone: <a href="tel:+09706418457">09706418457</a><br />
-        LinkedIn: <a href="https://linkedin.com/in/yukihirocnakada" target="_blank" rel="noopener noreferrer">linkedin.com/in/yukihirocnakada</a>
-      </p>
-
-      <form class="contact-form" aria-label="Contact form" onsubmit="event.preventDefault(); alert('Message sent! (Demo only)'); this.reset();">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="your.email@example.com" required autocomplete="email" />
-
-        <label for="message">Message</label>
-        <textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
-
-        <button type="submit">Send</button>
-      </form>
-    </section>
-  </main>
-</body>
-</html>
-
+    <!-- Skills Section -->
+    <section id="skills" class="container" role="region" aria-label="Skills">
+      <h2>Skills</h2>
+      <ul class="skills-list" aria-label="List of skills">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M1 4L23 4"></path><path d="M4 20L20 20"></path><path d="M7 4V20"></path><path d="M17 4V20"></path><path d="M7 14H10"></path><path d="M14 6H17"></path></svg>
+          JavaScript (ES6+)
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M12 18H17C18.1046 18 19 18.8954 19 20V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V20C5 18.8954 5.89543 18 7 18H12Z"></path><path d="M12 6H17C18.1046 6 19 6.89543 19 8V8C19 9.10457 18.1046 10 17 10H7C5.89543 10 5 9.10457 5 8V8C5 6.89543 5.89543 6 7 6H12Z"></path></svg>
+          HTML5 & CSS3
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.5L21.5 7.5V16.5L12 21.5L2.5 16.5V7.5L12 2.5Z"></path><path d="M9 12L15 12"></path><path d="M12 9L12 15"></path></svg>
+          React
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M19 8V16C19 17.1046 18.1046 18 17 18H7C5.89543 18 5 17.1046 5 16V8"></path><path d="M12 12L7 7"></path><path d="M12 12L17 7"></path></svg>
+          Node.js
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"></circle><path d="M9 16L15 12L9 8V16Z"></path></svg>
+          TypeScript
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M16 22V18"></path><path d="M8 22V14"></path><path d="M12 20V8"></path><path d="M18 12L8 4"></path></svg>
+          Git & GitHub
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M3 6H21"></path><path d="M3 18H21"></path><path d="M4 6V18"></path><path d="M20 6V18"></path></svg>
+          Responsive Design
+        </li>
+        <li>
+          <svg
